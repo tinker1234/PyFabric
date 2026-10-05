@@ -106,6 +106,21 @@ triggers a data reload, which rebuilds them.
 3. delete `pymods.*` from `sys.modules`, rediscover mods, import them again
 4. rewrite the generated packs, drop old commands, `server.reloadResources(...)` (like `/reload`)
 
+## The radio
+
+`/radio` and `pyfabric.radio` share one Java player (`src/client/java/dev/pyfabric/client/radio`):
+
+* `RadioHttp` — a tiny HTTP/1.0 client (Java's `HttpURLConnection` rejects old Shoutcast servers' `ICY 200 OK`
+  status line), following redirects.
+* `IcyInputStream` — strips the ICY metadata blocks the server interleaves every `icy-metaint` bytes and
+  reports `StreamTitle` changes.
+* `RadioStream` — follows `.pls`/`.m3u` playlists, decodes MP3 frames with JLayer, applies the volume and
+  writes PCM to a sink; reconnects with back-off when the stream drops.
+* `JavaSoundSink` — plays through Java Sound, separate from Minecraft's OpenAL sound engine, so the radio
+  keeps playing across menus and dimension changes.
+* `RadioClient` — the game glue: Minecraft's volume sliders, chat/actionbar messages, saved settings, and
+  listeners for Python (always called on the client thread).
+
 ## Repository layout
 
 ```

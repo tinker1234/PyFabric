@@ -1,6 +1,6 @@
 # The example mods
 
-Fourteen example mods live in [`examples/pymods`](../examples/pymods). Copy any of them into your
+Fifteen example mods live in [`examples/pymods`](../examples/pymods). Copy any of them into your
 `.minecraft/pymods/` (or a server's `pymods/`) folder. Each file starts with a docstring describing what
 it shows, and the code is commented. They were all tested on Minecraft 26.3 with fake players driving
 them (joining, chatting, using items, breaking blocks, dying…).
@@ -19,6 +19,7 @@ them (joining, chatting, using items, breaking blocks, dying…).
 | [announcer](#announcer) | 60 lines | server | repeating tasks, countdown with titles |
 | [treasure_hunt](#treasure_hunt) | 110 lines | server | a mini-game with state, chests, hints |
 | [coords_hud](#coords_hud) | 35 lines | client | key bindings, HUD drawing |
+| [radio_hud](#radio_hud) | 50 lines | client | internet radio API, radio events, right-aligned HUD |
 | [java_interop](#java_interop) | 70 lines | server | any Fabric event, raw Brigadier, Java collections |
 | [one_player_sleep.py](#one_player_sleep) | 25 lines | server | a mod in a single file |
 
@@ -118,6 +119,15 @@ content from another Python mod (rubies are added to the loot if Ruby Gear is in
 
 A client-only mod (`client.py`, no `main.py`): a semi-transparent box with coordinates, facing, biome and FPS.
 `H` toggles it (rebindable in Controls).
+
+## radio_hud
+
+A client-only internet radio companion. PyFabric's built-in `/radio play <url>` starts any Icecast,
+Shoutcast or MP3 stream; this mod adds a now-playing box in the top-right corner, an **R** key to stop or
+resume the station, and a chat warning if the station fails. Your favourite stream can go in
+`config/pymods/radio_hud.json`. Shows the [`pyfabric.radio`](api-reference.md#radio) API.
+
+![Radio playing in-game: title above the hotbar and in the corner](images/radio.png)
 
 ## java_interop
 

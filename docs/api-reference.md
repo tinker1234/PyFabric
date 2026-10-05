@@ -33,6 +33,7 @@ always read exactly what a function does.
 * [text](#text)
 * [mc](#mc)
 * [client](#client)
+* [radio](#radio)
 * [Hot reload rules](#hot-reload-rules)
 
 ---
@@ -477,6 +478,32 @@ Only importable on the client — use it from `client.py`.
 | `client.minecraft()` | the `Minecraft` instance: `.player`, `.level`, `.options`, `.getFps()`, … |
 
 `graphics` is Minecraft's `GuiGraphicsExtractor` — all its drawing methods are available directly.
+
+---
+
+## radio
+
+Internet radio, played on the client. Only importable on the client — use it from `client.py`.
+Players also get the built-in client command `/radio` (`play <url>`, `play` to resume, `stop`,
+`volume <0-100>`, `titles on|off`), which works on any server.
+
+| | |
+|---|---|
+| `radio.play(url=None)` | play an Icecast / Shoutcast / MP3 stream; `.pls` and `.m3u` links are followed. Without a URL, resumes the last station |
+| `radio.stop()` | |
+| `radio.volume(value=None)` | get, or set 0.0–1.0. Also multiplied by Minecraft's Master and Music sliders. Saved between sessions |
+| `radio.is_playing()` | `True` while connecting, playing or reconnecting |
+| `radio.state()` | `"CONNECTING"`, `"PLAYING"`, `"RECONNECTING"`, `"STOPPED"` or `"FAILED"` |
+| `radio.now_playing()` | current song title from the stream's ICY metadata, or `None` |
+| `radio.station()` | station name, or `None` |
+| `radio.url()` | current (or last) stream URL |
+| `radio.show_titles(on=True)` | show "♪ title" above the hotbar when the song changes |
+| `@radio.on_title` | `fn(title)` when the song changes (client thread) |
+| `@radio.on_state` | `fn(state, message)` when the radio connects, plays, reconnects, stops or fails |
+
+Streams reconnect automatically if the connection drops. **MP3 only** — most Icecast and Shoutcast
+stations; AAC, Ogg and HLS (`.m3u8`) streams fail with a clear message. Settings are stored in
+`config/pyfabric-radio.properties`.
 
 ---
 

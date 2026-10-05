@@ -22,7 +22,7 @@ add a command and use hot reload. Every step is something you can try in-game st
 
 1. Install Minecraft **26.3** with **Fabric Loader** (0.19.5 or newer).
 2. Download **Fabric API** for 26.3 and put it in `.minecraft/mods/`.
-3. Put **`pyfabric-1.0.0.jar`** in `.minecraft/mods/`.
+3. Put **`pyfabric-1.1.0.jar`** in `.minecraft/mods/`.
 4. Start the game once. PyFabric creates the folder `.minecraft/pymods/`.
 
 The same steps work for a dedicated server (put things in the server folder instead of `.minecraft`).
@@ -38,7 +38,7 @@ A Python mod is a folder inside `pymods/`:
 .minecraft/
   mods/
     fabric-api-….jar
-    pyfabric-1.0.0.jar
+    pyfabric-1.1.0.jar
   pymods/
     gemstones/              <- your mod; the folder name is the mod id (a-z, 0-9, _)
       main.py               <- runs on the client and on the server

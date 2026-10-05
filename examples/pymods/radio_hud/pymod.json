@@ -1,0 +1,6 @@
+{
+  "name": "Radio HUD",
+  "version": "1.0.0",
+  "description": "Client-side: shows the current radio song in the corner; R starts/stops your station",
+  "authors": ["Michael"]
+}

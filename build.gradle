@@ -44,6 +44,10 @@ dependencies {
 	pythonRuntime "org.graalvm.polyglot:polyglot:${project.graalpy_version}"
 	pythonRuntime "org.graalvm.polyglot:python:${project.graalpy_version}"
 
+	// MP3 decoder for the in-game radio (LGPL-2.1), bundled into the jar.
+	implementation("com.googlecode.soundlibs:jlayer:${project.jlayer_version}") { transitive = false }
+	include("com.googlecode.soundlibs:jlayer:${project.jlayer_version}") { transitive = false }
+
 	// Only the real jars (GraalPy's POM-only aggregator artifacts would confuse Loom).
 	implementation files({ configurations.pythonRuntime.filter { it.name.endsWith('.jar') } })
 }

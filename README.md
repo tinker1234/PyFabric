@@ -35,6 +35,7 @@ def hello(ctx, name=None):
 | **Scheduling** | run code later or every N ticks |
 | **Storage** | JSON config files and per-world save data |
 | **Client** | key bindings, HUD overlays, client ticks (`client.py`) |
+| **Radio** | play Icecast / Shoutcast / MP3 internet radio in-game: `/radio play <url>` or `radio.play(url)` from Python |
 | **Java** | every Minecraft, Fabric API and Java class is directly usable: `java.type("net.minecraft.world.item.Items")` |
 | **Hot reload** | `/pyfabric reload` swaps in your edited code: events, item/block behaviour, commands, recipes, loot, tags |
 
@@ -47,10 +48,10 @@ def hello(ctx, name=None):
 ## Install (players / server owners)
 
 1. Install Fabric for Minecraft 26.3 and put **Fabric API** in `mods/`.
-2. Put **`pyfabric-1.0.0.jar`** in `mods/` — download it from [`dist/`](dist/pyfabric-1.0.0.jar).
+2. Put **`pyfabric-<version>.jar`** in `mods/` — download it from [Releases](https://github.com/tinker1234/PyFabric/releases).
 3. Start the game once — a `pymods/` folder appears next to `mods/`.
 4. Copy Python mods into `pymods/` and restart — e.g. the folders in [`examples/pymods`](examples/pymods),
-   also available as [`dist/pyfabric-example-mods.zip`](dist/pyfabric-example-mods.zip).
+   also attached to each [release](https://github.com/tinker1234/PyFabric/releases) as `pyfabric-example-mods.zip`.
 
 Mods that add items or blocks must be installed on **both** the server and every client (like Java mods).
 Mods that only use events and commands can be installed on the server alone, and client-only mods
@@ -107,6 +108,7 @@ All in [`examples/pymods`](examples/pymods), each fully commented:
 | `announcer` | repeating announcements and an on-screen `/countdown` |
 | `treasure_hunt` | a mini-game: hidden loot chest with hot/cold hints |
 | `coords_hud` | client-only: HUD overlay with a toggle key |
+| `radio_hud` | client-only: internet radio with a now-playing display and a start/stop key |
 | `java_interop` | any Fabric event, raw Brigadier commands, Java collections, Java exceptions |
 | `one_player_sleep.py` | a complete mod in a single file |
 
@@ -117,11 +119,12 @@ All in [`examples/pymods`](examples/pymods), each fully commented:
 | `/pyfabric list` | loaded Python mods and their status (failed ones show the error) |
 | `/pyfabric reload` | hot-reload all Python mods |
 | `/pyfabric run <python>` | run Python in-game, e.g. `/pyfabric run player.getHealth()` (server owners only) |
+| `/radio play <url>` | play an internet radio stream (client-side, works on any server); also `/radio stop`, `/radio volume <0-100>`, `/radio titles on\|off`, `/radio` for status |
 
 ## Building from source
 
 ```bash
-./gradlew build          # -> build/libs/pyfabric-1.0.0.jar (GraalPy is bundled inside)
+./gradlew build          # -> build/libs/pyfabric-1.1.0.jar (GraalPy is bundled inside)
 ./gradlew runServer      # dev server; Python mods go in run/pymods
 ./gradlew runClient      # dev client
 ```
@@ -143,5 +146,6 @@ Integration tests drive the example mods with fake players on a dev server — s
 
 ## License
 
-GPL-3.0 (see [LICENSE](LICENSE)). GraalPy is © Oracle and contributors (UPL / PSF licences), bundled unmodified.
+GPL-3.0 (see [LICENSE](LICENSE)). Bundled unmodified: GraalPy © Oracle and contributors (UPL / PSF licences) and
+JLayer, the MP3 decoder used by the radio (LGPL-2.1).
 The example textures were drawn for this project and are free to reuse.

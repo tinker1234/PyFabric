@@ -30,7 +30,7 @@ from .mc import SUCCESS, CONSUME, PASS, FAIL
 from ._core import JavaException, ERRORS
 from .text import text, as_component, plain
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 __all__ = ["mc", "events", "registry", "resources", "recipes", "commands", "scheduler", "players", "world",
            "storage", "worldgen", "command", "CommandError", "text", "as_component", "plain", "log", "mod", "server",
