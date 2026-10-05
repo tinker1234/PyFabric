@@ -35,6 +35,7 @@ def hello(ctx, name=None):
 | **Scheduling** | run code later or every N ticks |
 | **Storage** | JSON config files and per-world save data |
 | **Client** | key bindings, HUD overlays, client ticks (`client.py`) |
+| **Libraries** | drop Java `.jar`s or pure-Python packages/wheels into `pymods/lib/` and use them from any mod |
 | **Radio** | play Icecast / Shoutcast / MP3 internet radio in-game: `/radio play <url>` or `radio.play(url)` from Python |
 | **Java** | every Minecraft, Fabric API and Java class is directly usable: `java.type("net.minecraft.world.item.Items")` |
 | **Hot reload** | `/pyfabric reload` swaps in your edited code: events, item/block behaviour, commands, recipes, loot, tags |
@@ -82,6 +83,25 @@ and look in the Ingredients creative tab. Edit the code, run **`/pyfabric reload
 
 ➡ Full tutorial: **[docs/getting-started.md](docs/getting-started.md)**
 
+## Using other libraries
+
+Put libraries in **`pymods/lib/`** (shared by all mods) or **`pymods/<your_mod>/lib/`** and use them:
+
+```
+pymods/
+  lib/
+    commons-math3-3.6.1.jar               Java library   -> java.type("org.apache.commons.math3.primes.Primes")
+    tabulate-0.10.0-py3-none-any.whl      PyPI wheel     -> import tabulate
+    mytools/__init__.py                   Python package -> import mytools
+```
+
+* **Java:** any `.jar` (sub-folders too). Jars may use Minecraft and Fabric classes themselves.
+* **Python:** packages, modules, `.zip` files and *pure-Python* wheels (`...-none-any.whl` from PyPI — download
+  with `pip download --no-deps <name>`). Packages with compiled code (numpy, etc.) are skipped with a warning.
+* New libraries are picked up by `/pyfabric reload`; removing a jar needs a restart.
+
+Details: [API reference → libs](docs/api-reference.md#libs).
+
 ## Documentation
 
 * [Getting started](docs/getting-started.md) — a step-by-step tutorial
@@ -124,7 +144,7 @@ All in [`examples/pymods`](examples/pymods), each fully commented:
 ## Building from source
 
 ```bash
-./gradlew build          # -> build/libs/pyfabric-1.1.0.jar (GraalPy is bundled inside)
+./gradlew build          # -> build/libs/pyfabric-1.2.0.jar (GraalPy is bundled inside)
 ./gradlew runServer      # dev server; Python mods go in run/pymods
 ./gradlew runClient      # dev client
 ```
@@ -141,8 +161,7 @@ Integration tests drive the example mods with fake players on a dev server — s
   but avoid scanning millions of blocks per tick. Running Minecraft on a GraalVM JDK should enable its JIT compiler.
 * **Hot reload** reruns your code. New items/blocks/key bindings still need a restart (Minecraft locks its registries
   after startup); everything else reloads.
-* The whole Python standard library is available. Pure-Python packages from PyPI can be copied into
-  `pymods/_lib/` (it is on `sys.path`); packages with native code (numpy etc.) are not supported.
+* The whole Python standard library is available, and you can add libraries: see below.
 
 ## License
 

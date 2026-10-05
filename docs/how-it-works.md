@@ -121,6 +121,14 @@ triggers a data reload, which rebuilds them.
 * `RadioClient` — the game glue: Minecraft's volume sliders, chat/actionbar messages, saved settings, and
   listeners for Python (always called on the client thread).
 
+## Libraries
+
+`pyfabric/libs.py` scans `pymods/lib/` and each `pymods/<mod>/lib/` before mods run (and on reload).
+Folders, `.zip` files and pure-Python wheels go on `sys.path` (Python's zipimport reads wheels directly).
+Each `.jar` is passed to GraalPy's `java.add_to_classpath`, which adds it to the host class loader whose parent
+is Fabric's class loader — so library classes can themselves use Minecraft and Fabric classes, and
+`java.type(...)` finds them.
+
 ## Repository layout
 
 ```

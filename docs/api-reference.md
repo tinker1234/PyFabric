@@ -31,6 +31,7 @@ always read exactly what a function does.
 * [world](#world)
 * [storage](#storage)
 * [text](#text)
+* [libs](#libs)
 * [mc](#mc)
 * [client](#client)
 * [radio](#radio)
@@ -435,6 +436,52 @@ from pyfabric.text import as_component, plain, translatable
 
 Strings anywhere in PyFabric understand `&` colour codes: `&0`–`&9`, `&a`–`&f` colours, `&l` bold,
 `&o` italic, `&n` underline, `&m` strikethrough, `&k` obfuscated, `&r` reset.
+
+---
+
+## libs
+
+Use any Java or Python library by dropping it into a lib folder:
+
+* `pymods/lib/` — shared by all mods (created automatically)
+* `pymods/<mod>/lib/` — ships with one mod (but, like everything in the single Python interpreter, any mod can use it)
+
+| File | How to use it |
+|---|---|
+| `name.jar` (in the folder or any sub-folder) | `java.type("com.example.Foo")` or `libs.java("com.example.Foo")` |
+| `package/` folder or `module.py` | `import package` |
+| `name-1.0-py3-none-any.whl` | `import name` — wheels are used as-is, no unpacking |
+| `something.zip` | zipped packages, `import` as usual |
+
+```python
+from pyfabric import libs
+import java
+
+Primes = java.type("org.apache.commons.math3.primes.Primes")   # pymods/lib/commons-math3-3.6.1.jar
+from tabulate import tabulate                                    # pymods/lib/tabulate-0.10.0-py3-none-any.whl
+
+Jsoup = libs.java("org.jsoup.Jsoup")    # like java.type, but a missing jar raises a clear ImportError
+```
+
+| | |
+|---|---|
+| `libs.java(class_name)` | a Java class from Minecraft, a mod or a lib jar; `ImportError` naming the lib folder if missing |
+| `libs.loaded()` | `{"jars": [...], "python_paths": [...], "skipped": [(path, reason)]}` |
+| `libs.lib_dirs()` | the lib folders that exist |
+| `libs.scan()` | rescan now (done automatically on startup and `/pyfabric reload`) |
+
+**Getting libraries:** Java jars from Maven Central (search.maven.org → "Downloads → jar"), Python wheels with
+`pip download --no-deps --only-binary=:all: <name>`.
+
+**Limits:**
+* Python packages with compiled native code (numpy, pandas, pyyaml's speedups, ...) don't work in the embedded
+  interpreter. Wheels whose name doesn't end in `-any.whl` are skipped with a warning in the log.
+* Jars are added while running: `/pyfabric reload` picks up new ones, but a removed or replaced jar only
+  disappears after a restart.
+* A jar is a plain library, not a Fabric mod: it can't contain mixins or Fabric entrypoints (those belong in `mods/`).
+* Java libraries that need native `.dll`/`.so` files (e.g. some audio or GPU libraries) may need extra setup.
+
+The old folder name `pymods/_lib/` still works.
 
 ---
 

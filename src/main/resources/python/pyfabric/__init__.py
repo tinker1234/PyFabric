@@ -17,6 +17,7 @@ Modules:
     world      set blocks, spawn entities, sounds, particles, explosions, run commands
     storage    JSON config files and per-world save data
     worldgen   ores that generate in new chunks
+    libs       Java jars and pure-Python packages from pymods/lib/
     mc         common Minecraft classes and id lookups (mc.item('minecraft:diamond'))
     text       chat text with colours (text("hi", color="gold"))
     client     key bindings, HUD drawing, client ticks (client.py only)
@@ -24,16 +25,16 @@ Modules:
 Every Java class is available too: ``import java; Foo = java.type("net.minecraft....Foo")``.
 """
 from . import _core
-from . import mc, events, registry, resources, recipes, commands, scheduler, players, world, storage, worldgen
+from . import mc, events, registry, resources, recipes, commands, scheduler, players, world, storage, worldgen, libs
 from .commands import command, CommandError
 from .mc import SUCCESS, CONSUME, PASS, FAIL
 from ._core import JavaException, ERRORS
 from .text import text, as_component, plain
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 __all__ = ["mc", "events", "registry", "resources", "recipes", "commands", "scheduler", "players", "world",
-           "storage", "worldgen", "command", "CommandError", "text", "as_component", "plain", "log", "mod", "server",
+           "storage", "worldgen", "libs", "command", "CommandError", "text", "as_component", "plain", "log", "mod", "server",
            "SUCCESS", "CONSUME", "PASS", "FAIL", "JavaException", "ERRORS"]
 
 

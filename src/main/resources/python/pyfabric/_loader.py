@@ -9,7 +9,7 @@ import traceback
 from pathlib import Path
 
 import pyfabric
-from . import _core, resources, commands
+from . import _core, resources, commands, libs
 
 _ID = re.compile(r"^[a-z0-9_]+$")
 
@@ -25,7 +25,7 @@ def _discover():
     for entry in sorted(root.iterdir()):
         is_pkg = entry.is_dir()
         name = entry.name if is_pkg else entry.stem
-        if name.startswith((".", "_")) or name == "__pycache__":
+        if name.startswith((".", "_")) or name in ("__pycache__", "lib"):
             continue
         if is_pkg:
             if not (entry / "main.py").exists() and not (entry / "client.py").exists():
@@ -99,16 +99,8 @@ def _run_entry(entry):
             _core.current = None
 
 
-def _add_shared_lib_path():
-    """pymods/_lib/ is on sys.path: put pure-Python libraries there to share them between mods."""
-    lib = Path(str(_core.Bridge.gameDir())) / "pymods" / "_lib"
-    lib.mkdir(parents=True, exist_ok=True)
-    if str(lib) not in sys.path:
-        sys.path.append(str(lib))
-
-
 def load_main():
-    _add_shared_lib_path()
+    libs.scan()
     _core.phase = "init"
     _core.mods = _discover()
     if not _core.mods:
@@ -136,6 +128,7 @@ def reload():
             del sys.modules[name]
     importlib.invalidate_caches()
 
+    libs.scan()
     _core.mods = _discover()
     _core.phase = "reload"
     try:
