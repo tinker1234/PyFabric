@@ -47,9 +47,10 @@ def hello(ctx, name=None):
 ## Install (players / server owners)
 
 1. Install Fabric for Minecraft 26.3 and put **Fabric API** in `mods/`.
-2. Put **`pyfabric-1.0.0.jar`** in `mods/`.
+2. Put **`pyfabric-1.0.0.jar`** in `mods/` — download it from [`dist/`](dist/pyfabric-1.0.0.jar).
 3. Start the game once — a `pymods/` folder appears next to `mods/`.
-4. Copy Python mods (e.g. the folders in [`examples/pymods`](examples/pymods)) into `pymods/` and restart.
+4. Copy Python mods into `pymods/` and restart — e.g. the folders in [`examples/pymods`](examples/pymods),
+   also available as [`dist/pyfabric-example-mods.zip`](dist/pyfabric-example-mods.zip).
 
 Mods that add items or blocks must be installed on **both** the server and every client (like Java mods).
 Mods that only use events and commands can be installed on the server alone, and client-only mods
