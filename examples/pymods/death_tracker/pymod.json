@@ -1,0 +1,6 @@
+{
+  "name": "Death Tracker",
+  "version": "1.0.0",
+  "description": "Remembers where players died, counts deaths per world and shows a leaderboard",
+  "authors": ["Michael"]
+}

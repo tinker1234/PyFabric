@@ -1,0 +1,6 @@
+{
+  "name": "Hello World",
+  "version": "1.0.0",
+  "description": "The smallest useful Python mod: a greeting and a command",
+  "authors": ["Michael"]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Treasure Hunt",
+  "version": "1.0.0",
+  "description": "A mini-game: a treasure chest is hidden nearby; hot/cold hints guide players to it",
+  "authors": ["Michael"],
+  "load_after": ["ruby_gear"]
+}

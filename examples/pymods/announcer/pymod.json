@@ -1,0 +1,6 @@
+{
+  "name": "Announcer",
+  "version": "1.0.0",
+  "description": "Rotating server tips every few minutes and a /countdown with on-screen titles",
+  "authors": ["Michael"]
+}

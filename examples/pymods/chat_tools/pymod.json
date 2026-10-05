@@ -1,0 +1,6 @@
+{
+  "name": "Chat Tools",
+  "version": "1.0.0",
+  "description": "Chat filter, @mentions with a ping sound, an FAQ auto-responder and /shout",
+  "authors": ["Michael"]
+}

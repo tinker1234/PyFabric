@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "dev.pyfabric.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"mixins": [
+		"FolderRepositorySourceAccessor",
+		"PackRepositoryMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

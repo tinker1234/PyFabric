@@ -1,0 +1,77 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+}
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	mavenCentral()
+}
+
+loom {
+	splitEnvironmentSourceSets()
+
+	mods {
+		"pyfabric" {
+			sourceSet sourceSets.main
+			sourceSet sourceSets.client
+		}
+	}
+
+	runs {
+		configureEach {
+			// GraalPy runs on stock JDKs in interpreter mode; silence the one-time warning.
+			vmArg "-Dpolyglot.engine.WarnInterpreterOnly=false"
+			vmArg "--enable-native-access=ALL-UNNAMED"
+			vmArg "--sun-misc-unsafe-memory-access=allow"
+		}
+	}
+}
+
+// Everything GraalPy needs at runtime. It is compiled against AND bundled
+// (jar-in-jar) so the finished pyfabric.jar is self-contained.
+configurations {
+	pythonRuntime
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	pythonRuntime "org.graalvm.polyglot:polyglot:${project.graalpy_version}"
+	pythonRuntime "org.graalvm.polyglot:python:${project.graalpy_version}"
+
+	// Only the real jars (GraalPy's POM-only aggregator artifacts would confuse Loom).
+	implementation files({ configurations.pythonRuntime.filter { it.name.endsWith('.jar') } })
+}
+
+// Loom's `include` is not transitive, so add every resolved GraalPy jar explicitly.
+afterEvaluate {
+	configurations.pythonRuntime.resolvedConfiguration.resolvedArtifacts.each { a ->
+		if (a.extension != 'jar') return
+		def id = a.moduleVersion.id
+		def dep = dependencies.create("${id.group}:${id.name}:${id.version}${a.classifier ? ':' + a.classifier : ''}") { transitive = false }
+		dependencies.add("include", dep)
+	}
+}
+
+processResources {
+	def version = project.version
+	inputs.property "version", version
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+	it.options.encoding = "UTF-8"
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}

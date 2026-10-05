@@ -1,0 +1,6 @@
+{
+  "name": "Fun Blocks",
+  "version": "1.0.0",
+  "description": "Blocks with behaviour: bounce pad, speed path, healing pad, landmine, doorbell, a redstone-emitting block",
+  "authors": ["Michael"]
+}

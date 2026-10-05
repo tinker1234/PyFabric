@@ -1,0 +1,6 @@
+{
+  "name": "Coords HUD",
+  "version": "1.0.0",
+  "description": "Client-side: an on-screen coordinates/biome/clock overlay toggled with a key (H)",
+  "authors": ["Michael"]
+}

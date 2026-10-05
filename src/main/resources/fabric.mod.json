@@ -1,0 +1,21 @@
+{
+	"schemaVersion": 1,
+	"id": "pyfabric",
+	"version": "${version}",
+	"name": "PyFabric",
+	"description": "Write Fabric mods in Python 3. Drop Python mods into the .minecraft/pymods folder.",
+	"authors": ["Michael"],
+	"license": "GPL-3.0-only",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["dev.pyfabric.PyFabric"],
+		"client": ["dev.pyfabric.client.PyFabricClient"]
+	},
+	"mixins": ["pyfabric.mixins.json"],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

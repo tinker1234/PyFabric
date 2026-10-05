@@ -1,0 +1,6 @@
+{
+  "name": "Java Interop",
+  "version": "1.0.0",
+  "description": "Advanced: using any Fabric API event, raw Brigadier, Java collections and threads directly from Python",
+  "authors": ["Michael"]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Server Utils",
+  "version": "1.0.0",
+  "description": "Essential commands: heal, feed, fly, day/night, spawn mobs, homes saved per world, nearby players",
+  "authors": ["Michael"]
+}
